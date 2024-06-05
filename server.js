@@ -1,7 +1,6 @@
-import { products } from "./product.js";
-
 import Fastify from "fastify";
-import { getOneProductItem, getProductItems } from "./schemas.js";
+import productRoutes from "./routes/product.routes.js";
+import indexRoutes from "./routes/index.routes.js";
 
 const fastify = Fastify({
   logger: true,
@@ -9,20 +8,10 @@ const fastify = Fastify({
 
 const PORT = 5000;
 
-fastify.get("/", (req, reply) => {
-  reply.send({
-    message: "Hello world",
-  });
-});
 
-fastify.get("/products", getProductItems);
 
-fastify.get("/products/:id", getOneProductItem, (req, reply) => {
-  const { id } = req.params;
-  const product = products.find((p) => p.id == id);
-  if (!product) reply.code(404).send("not found!");
-  reply.send(product);
-});
+fastify.register(productRoutes);
+fastify.register(indexRoutes);
 
 const main = async () => {
   try {
