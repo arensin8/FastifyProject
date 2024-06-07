@@ -16,10 +16,12 @@ const PORT = 5000;
 fastify.register(fastifySwagger);
 fastify.register(fastifySwaggerUi, {
   prefix: "swagger",
+  exposeRoute: true,
   seagger: {
     info: {
       title: "Fastify Swagger",
     },
+    schemes: ["http"],
   },
 });
 
