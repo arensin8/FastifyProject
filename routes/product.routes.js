@@ -18,14 +18,15 @@ const product = {
 const getOneProductItem = {
   schema: {
     tags: ["Products"],
-    params : {
-      type : 'object',
-      properties : {
-        id : {
-          type : 'string',
-          description : 'Id for the product'
-        }
-      }
+    summary: "Get one product by id",
+    params: {
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+          description: "Id for the product",
+        },
+      },
     },
     response: {
       200: product,
