@@ -1,4 +1,3 @@
-
 const PORT = 5001;
 
 export const fastifySwaggerConfig = {
@@ -11,6 +10,8 @@ export const fastifySwaggerConfig = {
     tags: [{ name: "Products", description: "Write for admin, read for user" }],
     host: `http://localhost${PORT}`,
     schemes: ["http"],
+    consumes: ["application/json"],
+    produces: ["application/json"],
     securityDefinitions: {
       apiKey: {
         type: "apiKey",
