@@ -12,9 +12,9 @@ export const sequelize = new Sequelize("fastify", "postgres", "arensin2002", {
   dialect: "postgres",
 });
 
-const DBconnection = async () => {
-  await sequelize.authenticate();
-  console.log("Connected to postgres!");
-};
+// const DBconnection = async () => {
+//   await sequelize.authenticate();
+//   console.log("Connected to postgres!");
+// };
 
-DBconnection();
+// DBconnection();

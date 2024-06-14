@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 import "./config/sequelize.config.js"; // Ensure the Sequelize connection is established
+import fastifyBcrypt from "fastify-bcrypt";
 
 export const fastify = Fastify({
   logger: true,
@@ -21,6 +22,10 @@ const PORT = 5001;
 fastify.register(fastifyCors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
+});
+
+fastify.register(fastifyBcrypt, {
+  saltWorkFactor: 12,
 });
 
 // Register Swagger
