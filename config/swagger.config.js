@@ -1,35 +1,36 @@
-const PORT = 5001;
-
 export const fastifySwaggerConfig = {
   swagger: {
     info: {
-      title: "Fastify Swagger",
-      description: "Swagger documentation for my app",
+      title: "fastify Swagger",
+      description: "swagger: documentation of my application",
       version: "0.1.0",
     },
-    tags: [{ name: "Products", description: "Write for admin, read for user" }],
-    host: `http://localhost${PORT}`,
+    tags: [
+      { name: "authentication", description: "all access" },
+      { name: "user", description: "user can read & write (profile)" },
+      {
+        name: "Category",
+        description:
+          "admin can read & write and all roles can read (categories)",
+      },
+      {
+        name: "products",
+        description: "admin can write and user can read (products)",
+      },
+    ],
     schemes: ["http"],
-    consumes: ["application/json"],
-    produces: ["application/json"],
+    consumes: ["application/json", "application/x-www-urlencoded"],
     securityDefinitions: {
       apiKey: {
         type: "apiKey",
-        name: "authorization",
         in: "header",
+        name: "authorization",
       },
     },
-    //config authorization for all routes
-    security: [{ apiKey: [] }],
   },
 };
 
 export const fastifySwaggerUiConfig = {
-  routePrefix: "/swagger",
-  swagger: {
-    info: {
-      title: "Fastify Swagger",
-    },
-  },
+  prefix: "swagger",
   exposeRoute: true,
 };
