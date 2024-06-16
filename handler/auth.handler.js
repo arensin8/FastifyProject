@@ -29,7 +29,7 @@ export const loginHandler = async (req, reply) => {
   if (!user) return reply.code(404).send({ message: "User not found" });
   const comapreResult = await fastify.bcrypt.compare(password, user.password);
   if (comapreResult) {
-    const accessToken = fastify.jwt.sign({ username }, { expiresIn: "1m" });
+    const accessToken = fastify.jwt.sign({ username }, { expiresIn: "1d" });
     user.setDataValue("accessToken", accessToken);
     await user.save();
     reply.code(200).send({
