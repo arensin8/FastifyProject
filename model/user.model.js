@@ -32,6 +32,10 @@ User.init(
     birthday: {
       type: DataTypes.DATE,
     },
+    accessToken: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
   },
   {
     sequelize,

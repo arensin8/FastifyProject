@@ -15,6 +15,7 @@ export const registerHandler = async (req, reply) => {
       username,
       password: hashedPassword,
     });
+
     await newUser.save();
     reply.send(newUser);
   } catch (error) {
@@ -28,9 +29,12 @@ export const loginHandler = async (req, reply) => {
   if (!user) return reply.code(404).send({ message: "User not found" });
   const comapreResult = await fastify.bcrypt.compare(password, user.password);
   if (comapreResult) {
+    const accessToken = fastify.jwt.sign({ username }, { expiresIn: "1m" });
+    user.setDataValue("accessToken", accessToken);
+    await user.save();
     reply.code(200).send({
       message: "login successfully",
-      user,
+      accessToken: user.accessToken,
     });
   } else {
     reply.code(401).send({
