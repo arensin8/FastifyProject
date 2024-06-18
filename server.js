@@ -9,7 +9,7 @@ import {
 import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import indexRoutes from "./routes/index.routes.js";
-import "./config/sequelize.config.js"; // Ensure the Sequelize connection is established
+import "./config/sequelize.config.js";
 import fastifyBcrypt from "fastify-bcrypt";
 import fastifyJwt from "@fastify/jwt";
 import cors from "cors";

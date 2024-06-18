@@ -24,7 +24,21 @@ const indexRoute = {
   },
 };
 
+const middleware1 = (req, res, next) => {
+  console.log("Hello from middleware1");
+  next();
+};
+
+const middleware2 = (req, res, next) => {
+  console.log("Hello from middleware2");
+  next();
+};
+
 export default function indexRoutes(fastify, options, done) {
-  fastify.get("/", indexRoute);
+  fastify.get("/", {
+    schema: indexRoute.schema,
+    preHandler: [middleware1, middleware2],
+    handler: indexRoute.handler,
+  });
   done();
 }
