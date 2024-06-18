@@ -12,6 +12,8 @@ import indexRoutes from "./routes/index.routes.js";
 import "./config/sequelize.config.js"; // Ensure the Sequelize connection is established
 import fastifyBcrypt from "fastify-bcrypt";
 import fastifyJwt from "@fastify/jwt";
+import cors from "cors";
+import fastifyMiddie from "@fastify/middie";
 
 export const fastify = Fastify({
   logger: true,
@@ -19,35 +21,42 @@ export const fastify = Fastify({
 
 const PORT = 5001;
 
-// Register CORS
-fastify.register(fastifyCors, {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-});
-
-fastify.register(fastifyBcrypt, {
-  saltWorkFactor: 12,
-});
-
-fastify.register(fastifyJwt, {
-  secret: "dshsjnehsdyfyvrjnsuicgwuryte",
-});
-
-// Register Swagger
-fastify.register(fastifySwagger, fastifySwaggerConfig);
-fastify.register(fastifySwaggerUi, fastifySwaggerUiConfig);
-
-// Register Routes
-fastify.register(indexRoutes);
-fastify.register(productRoutes);
-fastify.register(authRoutes, { prefix: "auth" });
-
-fastify.get("/test", async (request, reply) => {
-  return { hello: "world" };
-});
-
 const main = async () => {
   try {
+    // Register CORS
+    fastify.register(fastifyCors, {
+      origin: "*",
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    });
+
+    fastify.register(fastifyBcrypt, {
+      saltWorkFactor: 12,
+    });
+
+    fastify.register(fastifyJwt, {
+      secret: "dshsjnehsdyfyvrjnsuicgwuryte",
+    });
+
+    //for using middlewares in fastify
+    await fastify.register(fastifyMiddie);
+
+    // Register Swagger
+    fastify.register(fastifySwagger, fastifySwaggerConfig);
+    fastify.register(fastifySwaggerUi, fastifySwaggerUiConfig);
+    fastify.use(cors());
+    fastify.use((req, res, next) => {
+      console.log("Hello middleware in fastify");
+      next();
+    });
+    // Register Routes
+    fastify.register(indexRoutes);
+    fastify.register(productRoutes);
+    fastify.register(authRoutes, { prefix: "auth" });
+
+    fastify.get("/test", async (request, reply) => {
+      return { hello: "world" };
+    });
+
     await fastify.listen(PORT);
     console.log(`Server running at: http://localhost:${PORT}`);
   } catch (err) {
