@@ -2,8 +2,9 @@ import {
   gerAllProductsHandler,
   getOneProductHandler,
 } from "../handler/product.handler.js";
+import { getUserMiddleware } from "../utils/getUser.js";
 
-const product = {
+const productSchema = {
   type: "object",
   properties: {
     id: {
@@ -12,6 +13,17 @@ const product = {
     name: {
       type: "string",
     },
+  },
+};
+
+const userSchema = {
+  type: "object",
+  properties: {
+    id: { type: "integer" },
+    first_name: { type: "string" },
+    last_name: { type: "string" },
+    username: { type: "string" },
+    accessToken: { type: "string" },
   },
 };
 
@@ -34,10 +46,17 @@ const getOneProductItem = {
       },
     },
     response: {
-      200: product,
+      200: {
+        type: "object",
+        properties: {
+          product: productSchema,
+          user: userSchema,
+        },
+      },
     },
   },
   handler: getOneProductHandler,
+  preHandler: [getUserMiddleware],
 };
 
 const getProductItems = {
@@ -50,17 +69,22 @@ const getProductItems = {
     ],
     response: {
       200: {
-        type: "array",
-        items: product,
+        type: "object",
+        properties: {
+          products: {
+            type: "array",
+            items: productSchema,
+          },
+          user: userSchema,
+        },
       },
     },
   },
   handler: gerAllProductsHandler,
+  preHandler: [getUserMiddleware],
 };
 
 export default function productRoutes(fastify, options, done) {
-  //Its for adding authorization for product routes
-  fastify.addHook("onRequest", (request) => request.jwtVerify());
   fastify.get("/products", getProductItems);
   fastify.get("/products/:id", getOneProductItem);
   done();
