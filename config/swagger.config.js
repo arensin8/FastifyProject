@@ -7,7 +7,7 @@ export const fastifySwaggerConfig = {
     },
     tags: [
       { name: "authentication", description: "all access" },
-      // { name: "user", description: "user can read & write (profile)" },
+      { name: "user", description: "user can read & write (profile)" },
       // {
       //   name: "Category",
       //   description:

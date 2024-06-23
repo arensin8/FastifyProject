@@ -2,6 +2,10 @@ import {
   gerAllProductsHandler,
   getOneProductHandler,
 } from "../handler/product.handler.js";
+import {
+  changeProfileHandler,
+  getProfileHandler,
+} from "../handler/user.handler.js";
 import { getUserMiddleware } from "../utils/getUser.js";
 
 const productSchema = {
@@ -27,41 +31,46 @@ const userSchema = {
   },
 };
 
-const getOneProductItem = {
+const changeProfileRoute = {
   schema: {
-    tags: ["products"],
+    tags: ["user"],
     security: [
       {
         apiKey: [],
       },
     ],
-    summary: "Get one product by id",
-    params: {
+    summary: "Change user profile",
+    body: {
       type: "object",
       properties: {
-        id: {
+        address: {
           type: "string",
-          description: "Id for the product",
+        },
+        latitude: {
+          type: "string",
+        },
+        longitude: {
+          type: "string",
+        },
+        password: {
+          type: "string",
         },
       },
     },
     response: {
       200: {
         type: "object",
-        properties: {
-          product: productSchema,
-          user: userSchema,
-        },
       },
     },
   },
-  handler: getOneProductHandler,
+  handler: changeProfileHandler,
   preHandler: [getUserMiddleware],
 };
 
-const getProductItems = {
+const getProfileRoute = {
   schema: {
-    tags: ["products"],
+    tags: ["user"],
+    summary: "Get user Profile",
     security: [
       {
         apiKey: [],
@@ -70,28 +79,15 @@ const getProductItems = {
     response: {
       200: {
         type: "object",
-        properties: {
-          products: {
-            type: "array",
-            items: productSchema,
-          },
-          user: userSchema,
-        },
       },
     },
   },
-  handler: gerAllProductsHandler,
+  handler: getProfileHandler,
   preHandler: [getUserMiddleware],
 };
 
-export default function productRoutes(fastify, options, done) {
-  fastify.get("/", getProductItems);
-  fastify.get(":id", getOneProductItem);
+export default function userRoutes(fastify, options, done) {
+  fastify.patch("/change", changeProfileRoute);
+  fastify.get("/get", getProfileRoute);
   done();
 }
-
-
-// {
-//   "message": "login successfully",
-//   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFyZW56MiIsImlhdCI6MTcxOTE0MzA4NSwiZXhwIjoxNzE5MjI5NDg1fQ.sJB6sapwLdaRhIquAsRJs7dZhWIjDm96D_J7fzT_dQE"
-// }

@@ -14,6 +14,7 @@ import fastifyBcrypt from "fastify-bcrypt";
 import fastifyJwt from "@fastify/jwt";
 import cors from "cors";
 import fastifyMiddie from "@fastify/middie";
+import userRoutes from "./routes/user.routes.js";
 
 export const fastify = Fastify({
   logger: true,
@@ -50,7 +51,8 @@ const main = async () => {
     });
     // Register Routes
     fastify.register(indexRoutes);
-    fastify.register(productRoutes);
+    fastify.register(userRoutes, { prefix: "users" });
+    fastify.register(productRoutes, { prefix: "products" });
     fastify.register(authRoutes, { prefix: "auth" });
 
     fastify.get("/test", async (request, reply) => {
