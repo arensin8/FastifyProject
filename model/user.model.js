@@ -1,12 +1,11 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../config/sequelize.config.js";
 
-//User table
 export const User = sequelize.define("User", {
   id: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     primaryKey: true,
+    autoIncrement: true,
   },
   first_name: {
     type: DataTypes.STRING,
@@ -16,8 +15,8 @@ export const User = sequelize.define("User", {
   },
   username: {
     type: DataTypes.STRING,
-    allowNull: false,
     unique: true,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
@@ -36,29 +35,34 @@ export const User = sequelize.define("User", {
   },
 });
 
-//userDetails table
 export const UserDetails = sequelize.define("UserDetails", {
   id: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
     primaryKey: true,
+    autoIncrement: true,
   },
   address: {
     type: DataTypes.STRING,
   },
   latitudes: {
-    type: DataTypes.DOUBLE,
+    type: DataTypes.STRING,
   },
   longitudes: {
-    type: DataTypes.DOUBLE,
+    type: DataTypes.STRING,
   },
-  userId: {
+  UserId: {
     type: DataTypes.INTEGER,
   },
 });
-
 User.hasOne(UserDetails);
 UserDetails.belongsTo(User);
+
+// User.sync({ alter: true }).then(() => {
+//   console.log("User Sync completed");
+// });
+// UserDetails.sync({ alter: true }).then(() => {
+//   console.log("UserDetail Sync completed");
+// });
 
 // For managing that , when we change sth in db it updates automaticlly
 // User.sync({ alter: true }).then(() => {

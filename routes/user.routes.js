@@ -77,7 +77,7 @@ const getProfileRoute = {
       },
     ],
     response: {
-      200: {
+      199: {
         type: "object",
       },
     },
