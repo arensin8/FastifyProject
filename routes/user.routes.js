@@ -1,22 +1,17 @@
-import {
-  gerAllProductsHandler,
-  getOneProductHandler,
-} from "../handler/product.handler.js";
+// user.route.js
 import {
   changeProfileHandler,
   getProfileHandler,
 } from "../handler/user.handler.js";
 import { getUserMiddleware } from "../utils/getUser.js";
 
-const productSchema = {
+const userDetailsSchema = {
   type: "object",
   properties: {
-    id: {
-      type: "integer",
-    },
-    name: {
-      type: "string",
-    },
+    id: { type: "integer" },
+    address: { type: "string" },
+    latitude: { type: "string" },
+    longitude: { type: "string" },
   },
 };
 
@@ -28,6 +23,7 @@ const userSchema = {
     last_name: { type: "string" },
     username: { type: "string" },
     accessToken: { type: "string" },
+    details: userDetailsSchema,
   },
 };
 
@@ -52,14 +48,14 @@ const changeProfileRoute = {
         longitude: {
           type: "string",
         },
-        password: {
-          type: "string",
-        },
       },
     },
     response: {
       200: {
         type: "object",
+        properties: {
+          message: { type: "string" },
+        },
       },
     },
   },
@@ -77,8 +73,12 @@ const getProfileRoute = {
       },
     ],
     response: {
-      199: {
+      200: {
         type: "object",
+        properties: {
+          statusCode: { type: "integer" },
+          user: userSchema,
+        },
       },
     },
   },

@@ -1,3 +1,4 @@
+// user.model.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/sequelize.config.js";
 
@@ -44,30 +45,28 @@ export const UserDetails = sequelize.define("UserDetails", {
   address: {
     type: DataTypes.STRING,
   },
-  latitudes: {
+  latitude: {
     type: DataTypes.STRING,
   },
-  longitudes: {
+  longitude: {
     type: DataTypes.STRING,
   },
   UserId: {
     type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: "id",
+    },
   },
 });
-User.hasOne(UserDetails);
-UserDetails.belongsTo(User);
+
+// Define associations with alias
+User.hasOne(UserDetails, { as: "details", foreignKey: "UserId" });
+UserDetails.belongsTo(User, { as: "user", foreignKey: "UserId" });
 
 // User.sync({ alter: true }).then(() => {
 //   console.log("User Sync completed");
 // });
 // UserDetails.sync({ alter: true }).then(() => {
-//   console.log("UserDetail Sync completed");
-// });
-
-// For managing that , when we change sth in db it updates automaticlly
-// User.sync({ alter: true }).then(() => {
-//   console.log("user sync completed");
-// });
-// UserDetails.sync({ alter: true }).then(() => {
-//   console.log("userDetails sync completed");
+//   console.log("UserDetails Sync completed");
 // });
