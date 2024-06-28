@@ -2,27 +2,34 @@
 import { User, UserDetails } from "../model/user.model.js";
 
 export const changeProfileHandler = async (req, reply) => {
-  const body = { ...req.body };
-  const userDetails = await UserDetails.findOne({
-    where: {
-      UserId: req.user.id,
-    },
-  });
-  if (userDetails) {
-    for (const key in body) {
-      if (body[key]) {
-        userDetails.setDataValue(key, body[key]);
-      }
+  const { address, latitude, longitude } = req.body;
+
+  try {
+    // Update UserDetails table
+    const userDetails = await UserDetails.findOne({
+      where: { UserId: req.user.id },
+    });
+
+    if (userDetails) {
+      await UserDetails.update(
+        { address, latitude, longitude },
+        {
+          where: { UserId: req.user.id },
+        }
+      );
+    } else {
+      await UserDetails.create({
+        address,
+        latitude,
+        longitude,
+        UserId: req.user.id,
+      });
     }
-  } else {
-    Object.assign(body, { UserId: req.user.id });
-    const newUserDetails = await UserDetails.create(body);
-    await newUserDetails.save();
+    return reply.code(200).send({ message: "Profile updated successfully" });
+  } catch (err) {
+    console.error("Error in changeProfileHandler:", err);
+    return reply.code(500).send({ message: err.message });
   }
-  return reply.code(200).send({
-    statusCode: 200,
-    message: "User updated successfully",
-  });
 };
 
 export const getProfileHandler = async (req, reply) => {

@@ -64,9 +64,9 @@ export const UserDetails = sequelize.define("UserDetails", {
 User.hasOne(UserDetails, { as: "details", foreignKey: "UserId" });
 UserDetails.belongsTo(User, { as: "user", foreignKey: "UserId" });
 
-// User.sync({ alter: true }).then(() => {
-//   console.log("User Sync completed");
-// });
-// UserDetails.sync({ alter: true }).then(() => {
-//   console.log("UserDetails Sync completed");
-// });
+User.sync({ alter: true }).then(() => {
+  console.log("User Sync completed");
+});
+UserDetails.sync({ alter: true }).then(() => {
+  console.log("UserDetails Sync completed");
+});

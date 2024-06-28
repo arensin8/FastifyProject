@@ -15,6 +15,7 @@ import fastifyJwt from "@fastify/jwt";
 import cors from "cors";
 import fastifyMiddie from "@fastify/middie";
 import userRoutes from "./routes/user.routes.js";
+import categoryRoutes from "./routes/categort.routes.js";
 
 export const fastify = Fastify({
   logger: true,
@@ -51,9 +52,10 @@ const main = async () => {
     });
     // Register Routes
     fastify.register(indexRoutes);
-    fastify.register(userRoutes, { prefix: "users" });
-    fastify.register(productRoutes, { prefix: "products" });
     fastify.register(authRoutes, { prefix: "auth" });
+    fastify.register(userRoutes, { prefix: "users" });
+    fastify.register(categoryRoutes, { prefix: "category" });
+    fastify.register(productRoutes, { prefix: "products" });
 
     fastify.get("/test", async (request, reply) => {
       return { hello: "world" };
