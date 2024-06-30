@@ -9,7 +9,7 @@ export const fastifySwaggerConfig = {
       { name: "authentication", description: "all access" },
       { name: "user", description: "user can read & write (profile)" },
       {
-        name: "Category",
+        name: "category",
         description:
           "admin can read & write and all roles can read (categories)",
       },

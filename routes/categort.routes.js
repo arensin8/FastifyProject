@@ -1,3 +1,10 @@
+import {
+  addNewCategory,
+  getAllCategories,
+  getOneCategory,
+  removeCategory,
+  updateCategory,
+} from "../handler/category.handler.js";
 import { getUserMiddleware } from "../utils/getUser.js";
 
 const addCategoryRoute = {
@@ -22,8 +29,8 @@ const addCategoryRoute = {
       },
     },
   },
-  // handler: changeProfileHandler,
-  // preHandler: [getUserMiddleware],
+  handler: addNewCategory,
+  preHandler: [getUserMiddleware],
 };
 
 const updateCategoryRoute = {
@@ -53,8 +60,8 @@ const updateCategoryRoute = {
       },
     },
   },
-  // handler: getProfileHandler,
-  // preHandler: [getUserMiddleware],
+  handler: updateCategory,
+  preHandler: [getUserMiddleware],
 };
 
 const getAllCategoriesRoute = {
@@ -68,8 +75,8 @@ const getAllCategoriesRoute = {
       },
     },
   },
-  // handler: getProfileHandler,
-  // preHandler: [getUserMiddleware],
+  handler: getAllCategories,
+  preHandler: [getUserMiddleware],
 };
 
 const getOneCategoryRoute = {
@@ -91,8 +98,8 @@ const getOneCategoryRoute = {
       },
     },
   },
-  // handler: getProfileHandler,
-  // preHandler: [getUserMiddleware],
+  handler: getOneCategory,
+  preHandler: [getUserMiddleware],
 };
 
 const removeCategoryRoute = {
@@ -114,8 +121,8 @@ const removeCategoryRoute = {
       },
     },
   },
-  // handler: getProfileHandler,
-  // preHandler: [getUserMiddleware],
+  handler: removeCategory,
+  preHandler: [getUserMiddleware],
 };
 
 export default function categoryRoutes(fastify, options, done) {
