@@ -12,3 +12,7 @@ export const Category = sequelize.define("category", {
     unique: true,
   },
 });
+
+Category.sync({ alter: true }).then(() => {
+  console.log("Category sync completed");
+});

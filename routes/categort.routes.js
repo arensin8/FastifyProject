@@ -55,7 +55,7 @@ const updateCategoryRoute = {
       },
     },
     response: {
-      200: {
+      199: {
         type: "object",
       },
     },
@@ -93,7 +93,7 @@ const getOneCategoryRoute = {
       },
     },
     response: {
-      200: {
+      199: {
         type: "object",
       },
     },
@@ -116,7 +116,7 @@ const removeCategoryRoute = {
       },
     },
     response: {
-      200: {
+      199: {
         type: "object",
       },
     },
