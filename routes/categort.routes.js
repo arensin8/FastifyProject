@@ -18,6 +18,9 @@ const addCategoryRoute = {
         name: {
           type: "string",
         },
+        parentId: {
+          type: "integer",
+        },
       },
     },
     response: {
