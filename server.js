@@ -15,7 +15,7 @@ import fastifyJwt from "@fastify/jwt";
 import cors from "cors";
 import fastifyMiddie from "@fastify/middie";
 import userRoutes from "./routes/user.routes.js";
-import categoryRoutes from "./routes/categort.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
 
 export const fastify = Fastify({
   logger: true,
